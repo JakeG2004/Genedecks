@@ -14,11 +14,9 @@ func _ready():
 	germ = preload("res://scenes/germ.tscn")
 	addGerms()
 
-func addGerms():
-	numGerms = 10
-	
+func addGerms():	
 	#make new germ and add it as a child
-	for x in numGerms:
+	for i in numGerms:
 		var tmp = germ.instantiate()
 		add_child(tmp)
 		germs.append(tmp)
@@ -37,21 +35,22 @@ func _process(delta):
 		nextWave()
 		
 func nextWave():
+	#Sort the germs from most time alive to least time alive
+	germs.sort_custom(func(a, b): return a.timeAlive > b.timeAlive) #TODO: Fix previously freed error
 	print("new wave")
 	numPopped = 0
 	
 	#make new germs
-	for x in range(10):
+	for i in range(numGerms):
 		breedGerms()
 		
 	#delete old germs
-	for curGerm in germs:
-		curGerm.queue_free()
+	for i in range(numGerms):
+		germs[i].queue_free()
 		
 	#set new germ array
 	germs = germBuffer
 	
-		
 func breedGerms():
 	#Get parents
 	var parent1 = pickWeightedParent()
@@ -65,11 +64,13 @@ func breedGerms():
 	
 	#set genes to be average of parent genes
 	for gene in tmp.genome:
-		tmp[gene] = average(parent1.genome[gene], parent2.genome[gene])
+		tmp.genome[gene] = average(parent1.genome[gene], parent2.genome[gene])
 	
 	#add as a child and add to buffer
 	add_child(tmp)
 	germBuffer.append(tmp)
+	
+	await get_tree().create_timer(frequency).timeout
 	
 	
 func pickWeightedParent():
