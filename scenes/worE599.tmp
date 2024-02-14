@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://dbt5ddixg4ig4"]
+
+[ext_resource type="Script" path="res://scripts/germController.gd" id="1_q0s0g"]
+[ext_resource type="PackedScene" uid="uid://cddxrseal058t" path="res://scenes/germ.tscn" id="2_pkjff"]
+
+[sub_resource type="Curve2D" id="Curve2D_xpmuf"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 1, -148, 0, 0, 0, 0, 489, -4, 0, 0, 0, 0, 511, 268, 0, 0, 0, 0, 207, 521, 0, 0, 0, 0, -77, 317, 0, 0, 0, 0, -214, 162, 0, 0, 0, 0, -152, -73, 0, 0, 0, 0, 1, -148)
+}
+point_count = 8
+
+[node name="world" type="Node2D"]
+
+[node name="germPath" type="Path2D" parent="."]
+position = Vector2(1, 0)
+curve = SubResource("Curve2D_xpmuf")
+script = ExtResource("1_q0s0g")
+level = null
+
+[node name="germ" parent="germPath" instance=ExtResource("2_pkjff")]
+position = Vector2(1, -148)
+rotation = 0.286939
+
+[node name="Camera2D" type="Camera2D" parent="."]

@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://dbt5ddixg4ig4"]
+
+[ext_resource type="Script" path="res://scripts/germController.gd" id="1_q0s0g"]
+[ext_resource type="PackedScene" uid="uid://cyfh7um77r6mu" path="res://scenes/tower.tscn" id="3_cq0ss"]
+
+[sub_resource type="Curve2D" id="Curve2D_xpmuf"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -521, -265, 0, 0, 0, 0, 483, -256, 0, 0, 0, 0, 487, -3, 0, 0, 0, 0, -529, -6, 0, 0, 0, 0, -525, 252, 0, 0, 0, 0, 629, 252, 0, 0, 0, 0, 1043, 533)
+}
+point_count = 7
+
+[node name="world" type="Node2D"]
+
+[node name="germPath" type="Path2D" parent="."]
+position = Vector2(1, 0)
+curve = SubResource("Curve2D_xpmuf")
+script = ExtResource("1_q0s0g")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="towers" type="Node2D" parent="."]
+
+[node name="tower" parent="towers" instance=ExtResource("3_cq0ss")]
+position = Vector2(1, -165)
